@@ -81,27 +81,29 @@ lockfile needs to be regenerated.
 
 ## Run locally
 
-1. Create a MySQL database named `ems_db`. Set the database password through
-   the `SPRING_DATASOURCE_PASSWORD` environment variable (and optionally set
-   `MYSQL_USERNAME`; it defaults to `root`).
-2. Install JDK 21 and set `JAVA_HOME`.
-3. Start the API:
+1. Create a MySQL database named `ems_db` and make sure the `MySQL80` service is
+   installed. Install JDK 21 and Node.js 20 or newer.
+2. Open two PowerShell terminals at the repository root.
+3. In the first terminal, start the API:
 
    ```powershell
-   cd backend
-   $env:SPRING_DATASOURCE_PASSWORD = "<your-mysql-password>"
-   .\mvnw.cmd spring-boot:run
+   .\run-backend.ps1
    ```
 
-4. Start the frontend in another terminal:
+   The launcher detects Java 21, starts the `MySQL80` service when needed, and
+   securely prompts for the MySQL root password. To avoid the prompt in a
+   session, set `SPRING_DATASOURCE_PASSWORD` before running the command.
+4. In the second terminal, start the frontend:
 
    ```powershell
-   cd frontend
-   npm install
-   npm run dev
+   .\run-frontend.ps1
    ```
 
-The frontend uses `http://localhost:8080/api/employees`.
+   The launcher installs the locked frontend dependencies automatically when
+   `node_modules` is missing.
+
+The frontend is available at `http://127.0.0.1:5174/` and uses
+`http://localhost:8080/api/employees`.
 
 ## Validation
 
